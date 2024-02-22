@@ -21,6 +21,6 @@ urlpatterns = [
     path('top50/', top50, name='top50'),
     path('top502/', top502, name='top502'),
     path('archive/', archive, name='archive'),
-    path('18season/', season, name='season'),
+    path('<str:mavsum>/18season/', season, name='season'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

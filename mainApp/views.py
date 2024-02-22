@@ -85,11 +85,23 @@ def top50(request):
 
 
 def top502(request):
-    return render(request, 'stats/top-50-clubs-by-income-in-2021.html')
+    context = {
+        'clubs': Club.objects.order_by('-kapital')[:50]
+    }
+    return render(request, 'stats/top-50-clubs-by-income-in-2021.html',context)
 
 
 def archive(request):
-    return render(request, 'transfer-archive.html')
+    mavsumlar = Transfer.objects.all().values_list('mavsum', flat=True)
+    transfer = set(mavsumlar)
+    transfers = list(transfer)
+    context = {
+        'transfer': sorted(transfers)
+                }
+    return render(request, 'transfer-archive.html', context)
 
-def season(request):
-    return render(request, '2017-18season.html')
+def season(request,mavsum):
+    context = {
+        'seasons': Transfer.objects.filter(mavsum=mavsum)
+    }
+    return render(request, '2017-18season.html',context)
